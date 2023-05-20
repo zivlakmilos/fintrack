@@ -1,2 +1,5 @@
-export const cli = async () => {
+import mainMenu from './screens/MainMenu';
+
+export const cli = () => {
+  mainMenu();
 }
