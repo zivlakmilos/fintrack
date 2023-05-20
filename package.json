@@ -1,0 +1,25 @@
+{
+  "name": "fintrack",
+  "version": "1.0.0",
+  "description": "Personal finance terminal software ",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zivlakmilos/fintrack.git"
+  },
+  "keywords": [
+    "finance",
+    "personal-finance",
+    "terminal",
+    "accounting"
+  ],
+  "author": "Milos Zivlak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zivlakmilos/fintrack/issues"
+  },
+  "homepage": "https://github.com/zivlakmilos/fintrack#readme"
+}
