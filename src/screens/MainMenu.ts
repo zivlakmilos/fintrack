@@ -41,8 +41,10 @@ const menuItems = [
   },
 ];
 
-const mainMenu = (): void => {
-  const screen = blessed.screen();
+const showMainMenu = (): void => {
+  const screen = blessed.screen({
+    title: 'FinTrack',
+  });
 
   screen.key('q', () => {
     process.exit(0);
@@ -59,4 +61,4 @@ const mainMenu = (): void => {
   screen.render();
 }
 
-export default mainMenu;
+export default showMainMenu;
