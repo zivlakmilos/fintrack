@@ -22,6 +22,7 @@ export const switchScreen = (screen: blessed.Widgets.Screen, current: string, ne
   const nextScreen = screen.get<blessed.Widgets.BlessedElement | undefined>(next, undefined);
   if (nextScreen) {
     nextScreen.show();
+    nextScreen.focus();
   }
 
   screen.render();

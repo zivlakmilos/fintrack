@@ -25,6 +25,9 @@ export const cli = () => {
 
   screen.append(header);
   screen.append(mainMenuScreen);
+  screen.append(openYearScreen);
+
+  openYearScreen.hide();
 
   screen.set('main_menu', mainMenuScreen);
   screen.set('open_year', openYearScreen);

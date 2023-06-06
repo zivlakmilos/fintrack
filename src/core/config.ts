@@ -46,6 +46,13 @@ export const openConfig = (): void => {
   }
 }
 
+export const saveConfig = (): void => {
+  const baseDir = getBaseDir();
+  const filePath = path.join(baseDir, `config.json`);
+
+  saveJSON(config, filePath);
+}
+
 export const getConfig = (): Config => {
   return config;
 }
