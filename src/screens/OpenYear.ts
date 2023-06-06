@@ -1,5 +1,5 @@
 import blessed from 'blessed';
-import { switchScreen } from '../utils/ui';
+import { switchScreen } from '../core/utils';
 
 const createOpenYear = (screen: blessed.Widgets.Screen) => {
   const form = blessed.form({

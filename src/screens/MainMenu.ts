@@ -1,7 +1,7 @@
 import blessed from 'blessed';
 
 import createMenu from '../components/Menu';
-import { switchScreen } from '../utils/ui';
+import { switchScreen } from '../core/utils';
 
 const createMeinMenu = (screen: blessed.Widgets.Screen) => {
   const menuItems = [
