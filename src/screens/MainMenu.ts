@@ -28,7 +28,9 @@ const createMeinMenu = (screen: blessed.Widgets.Screen) => {
     {
       id: 'accounts',
       label: 'Accounts',
-      callback: () => { },
+      callback: () => {
+        switchScreen(screen, 'main_menu', 'accounts')
+      },
     },
     {
       id: 'open_year',
