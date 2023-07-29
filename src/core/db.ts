@@ -4,8 +4,13 @@ import path from 'path';
 import { JSONObject, loadJSON, saveJSON } from './json';
 import { getBaseDir } from './utils';
 
+export type DatabaseAccout = {
+  id: string,
+  name: string,
+}
+
 export type Database = {
-  accounts: any[],
+  accounts: DatabaseAccout[],
   entries: any[],
 }
 
@@ -51,4 +56,8 @@ export const openYear = (year: number): void => {
   if (isDatabase(data)) {
     db = data;
   }
+}
+
+export const getDb = (): Database => {
+  return db;
 }

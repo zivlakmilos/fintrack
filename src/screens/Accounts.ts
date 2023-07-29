@@ -1,7 +1,7 @@
 import blessed from 'blessed';
 import { switchScreen } from '../core/utils';
 import { getConfig, saveConfig } from '../core/config';
-import { openYear } from '../core/db';
+import { Database, DatabaseAccout, getDb, openYear } from '../core/db';
 
 const createHeader = () => {
   const box = blessed.box({
@@ -40,7 +40,7 @@ const createHeader = () => {
   return box;
 }
 
-const createRow = (row: number) => {
+const createRow = (row: number, data: DatabaseAccout) => {
   const box = blessed.box({
     left: 'center',
     width: 54,
@@ -71,6 +71,7 @@ const createRow = (row: number) => {
     width: 20,
     top: 0,
   });
+  txtId.setValue(data.id);
 
   const txtTitle = blessed.textbox({
     mouse: true,
@@ -96,6 +97,7 @@ const createRow = (row: number) => {
     width: 20,
     top: 0,
   });
+  txtTitle.setValue(data.name);
 
   const btnDelete = blessed.button({
     mouse: true,
@@ -128,14 +130,14 @@ const createRow = (row: number) => {
   return box;
 }
 
-const createInsert = (row: number) => {
+const createInsert = (row: number, onInsert: () => void) => {
   const box = blessed.box({
     left: 'center',
     width: 54,
     top: (row + 2) * 3 + 2,
   });
 
-  const btnDelete = blessed.button({
+  const btnInsert = blessed.button({
     mouse: true,
     keys: true,
     shrink: true,
@@ -159,7 +161,9 @@ const createInsert = (row: number) => {
     top: 0,
   });
 
-  box.append(btnDelete);
+  btnInsert.on('press', onInsert);
+
+  box.append(btnInsert);
 
   return box;
 }
@@ -223,7 +227,30 @@ const createCommands = (screen: blessed.Widgets.Screen, row: number) => {
   return box;
 }
 
+const createUi = (screen: blessed.Widgets.Screen, form: blessed.Widgets.FormElement<unknown>, db: Database, render: () => void) => {
+  const rows = db.accounts.length;
+
+  form.append(createHeader());
+
+  for (let i = 0; i < rows; i++) {
+    const row = createRow(i, db.accounts[i]);
+    form.append(row);
+  }
+
+  form.append(createInsert(rows, () => {
+    db.accounts.push({
+      id: '',
+      name: '',
+    });
+    render();
+  }));
+
+  form.append(createCommands(screen, rows + 1));
+}
+
 const createAccounts = (screen: blessed.Widgets.Screen) => {
+  const db = getDb();
+
   const form = blessed.form({
     keys: true,
     width: '90%',
@@ -233,18 +260,17 @@ const createAccounts = (screen: blessed.Widgets.Screen) => {
     top: 8,
   });
 
-  const rows = 5;
+  const render = () => {
+    form.children.forEach(el => {
+      form.remove(el);
+    });
 
-  form.append(createHeader());
-
-  for (let i = 0; i < rows; i++) {
-    const row = createRow(i);
-    form.append(row);
+    createUi(screen, form, db, render);
+    form.render();
+    form.focusNext();
   }
 
-  form.append(createInsert(rows));
-
-  form.append(createCommands(screen, rows + 1));
+  createUi(screen, form, db, render);
 
   return form;
 }
